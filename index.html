@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Lobby ff Max</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0a0a1a;
+            --text-color: #e0e0e0;
+            --card-bg: #12122e;
+            --input-bg: #1a1a3a;
+            --input-border: #2a2a5a;
+            --button-color: #0d47a1;
+            --button-hover: #1565c0;
+            --neon-glow: #2962ff;
+            --error-color: #f44336;
+            --success-color: #4caf50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 15px;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(13, 71, 161, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(41, 98, 255, 0.1) 0%, transparent 20%);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 25px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid rgba(41, 98, 255, 0.2);
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .logo-icon {
+            font-size: 2.5em;
+            color: var(--neon-glow);
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(41, 98, 255, 0.7);
+        }
+
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(41, 98, 255, 0.5);
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #b0b0ff;
+            font-size: 0.9em;
+            margin-bottom: 25px;
+            opacity: 0.8;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 1em;
+            color: #b0b0ff;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 16px 18px;
+            border: 2px solid var(--input-border);
+            border-radius: 12px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-size: 1.05em;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--neon-glow);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(41, 98, 255, 0.2), inset 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--button-color), #1e88e5);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(13, 71, 161, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button i {
+            margin-right: 12px;
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, var(--button-hover), #2196f3);
+            box-shadow: 0 8px 25px rgba(13, 71, 161, 0.7);
+            transform: translateY(-3px);
+        }
+
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 15px rgba(13, 71, 161, 0.5);
+        }
+
+        button:disabled {
+            background: #424242;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        button:disabled:hover::before {
+            left: -100%;
+        }
+
+        #image-container {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .image-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        #result-image {
+            width: 100%;
+            height: auto;
+            border: 3px solid var(--neon-glow);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(41, 98, 255, 0.4);
+            display: none;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease;
+            cursor: pointer;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .download-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            border-radius: 16px;
+            flex-direction: column;
+            color: white;
+            font-weight: bold;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .download-overlay i {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: var(--neon-glow);
+        }
+
+        .loader {
+            border: 5px solid var(--input-border);
+            border-top: 5px solid var(--neon-glow);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+            display: none;
+            box-shadow: 0 0 20px rgba(41, 98, 255, 0.4);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .download-hint {
+            background: rgba(41, 98, 255, 0.1);
+            color: var(--neon-glow);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 0.9em;
+            display: none;
+            border: 1px solid rgba(41, 98, 255, 0.3);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .download-hint i {
+            margin-right: 8px;
+        }
+
+        .download-button {
+            background: linear-gradient(135deg, var(--button-color), #1e88e5);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            margin-top: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(13, 71, 161, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .download-button i {
+            margin-right: 8px;
+        }
+
+        .download-button:hover {
+            background: linear-gradient(135deg, var(--button-hover), #2196f3);
+            transform: translateY(-2px);
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .error-message {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--error-color);
+            border-left: 4px solid var(--error-color);
+        }
+
+        .success-message {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #6a6a8a;
+            padding: 0 15px;
+        }
+
+        /* Touch feedback untuk mobile */
+        .touch-active {
+            transform: scale(0.95);
+            transition: transform 0.2s ease;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 10px;
+            }
+            
+            .container {
+                padding: 20px 15px;
+                border-radius: 16px;
+            }
+            
+            h1 {
+                font-size: 1.6em;
+            }
+            
+            input[type="text"] {
+                padding: 14px 16px;
+                font-size: 1em;
+            }
+            
+            button {
+                padding: 16px;
+                font-size: 1.05em;
+            }
+        }
+
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.4em;
+            }
+            
+            .logo-icon {
+                font-size: 2.2em;
+            }
+            
+            input[type="text"] {
+                padding: 12px 14px;
+            }
+            
+            button {
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-gamepad"></i>
+            </div>
+            <h1>Mentahan FF</h1>
+            <div class="subtitle">Note: jika jelek, keluar dari web lalu masuk lagi</div>
+        </div>
+
+        <div class="input-group">
+            <label for="input-text">Masukkan Nama Player:</label>
+            <input type="text" id="input-text" placeholder="Contoh: Pinzx">
+        </div>
+        
+        <button id="generate-button">
+            <i class="fas fa-magic"></i> <span id="button-text">BUAT GAMBAR</span>
+        </button>
+    </div>
+
+    <div id="image-container">
+        <div class="loader" id="loader"></div>
+        
+        <div class="image-wrapper">
+            <img id="result-image" src="" alt="Gambar Lobby FF">
+            <div class="download-overlay" id="download-overlay">
+                <i class="fas fa-download"></i>
+                <span>Lepaskan untuk Download</span>
+            </div>
+        </div>
+        
+        <div class="download-hint" id="download-hint">
+            <i class="fas fa-hand-pointer"></i> Tahan gambar untuk mengunduh
+        </div>
+        
+        <button class="download-button" id="download-button">
+            <i class="fas fa-download"></i> DOWNLOAD GAMBAR
+        </button>
+        
+        <div class="status-message" id="status-message"></div>
+    </div>
+
+    <div class="footer">
+        © Made By Vinzx
+    </div>
+
+    <script>
+        // --- JavaScript untuk Logika API dan Tampilan ---
+
+        const BASE_API_URL = "https://api.deline.web.id/maker/lobbyffmax?text=";
+        const inputTextElement = document.getElementById('input-text');
+        const generateButton = document.getElementById('generate-button');
+        const buttonText = document.getElementById('button-text');
+        const buttonIcon = generateButton.querySelector('i');
+        const resultImage = document.getElementById('result-image');
+        const loader = document.getElementById('loader');
+        const downloadHint = document.getElementById('download-hint');
+        const downloadButton = document.getElementById('download-button');
+        const downloadOverlay = document.getElementById('download-overlay');
+        const statusMessage = document.getElementById('status-message');
+
+        let touchTimer;
+        let isTouchActive = false;
+
+        // Fungsi untuk mereset tampilan
+        function resetUI() {
+            buttonText.textContent = 'BUAT GAMBAR';
+            buttonIcon.className = 'fas fa-magic';
+            resultImage.style.display = 'none';
+            downloadHint.style.display = 'none';
+            downloadButton.style.display = 'none';
+            downloadOverlay.style.display = 'none';
+            statusMessage.style.display = 'none';
+            statusMessage.className = 'status-message';
+        }
+
+        // Fungsi untuk download gambar
+        function downloadImage() {
+            const imageUrl = resultImage.src;
+            const fileName = `lobby_ff_${inputTextElement.value.trim() || 'player'}.jpg`;
+            
+            // Buat elemen anchor untuk download
+            const link = document.createElement('a');
+            link.href = imageUrl;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showStatus('✅ Gambar berhasil diunduh!', 'success');
+        }
+
+        // Fungsi yang dijalankan saat tombol ditekan
+        function generateImage() {
+            const textValue = inputTextElement.value.trim();
+
+            if (!textValue) {
+                showStatus('⚠️ Masukkan nama player terlebih dahulu!', 'error');
+                inputTextElement.focus();
+                return;
+            }
+
+            // Setup UI Loading
+            resultImage.style.display = 'none';
+            downloadHint.style.display = 'none';
+            downloadButton.style.display = 'none';
+            downloadOverlay.style.display = 'none';
+            statusMessage.style.display = 'none';
+            loader.style.display = 'block';
+            generateButton.disabled = true;
+            buttonText.textContent = 'MEMPROSES...';
+            buttonIcon.className = 'fas fa-spinner fa-spin';
+
+            // Buat URL API lengkap
+            const encodedText = encodeURIComponent(textValue);
+            const timestamp = new Date().getTime();
+            const finalUrl = BASE_API_URL + encodedText + "&t=" + timestamp;
+
+            // Muat Gambar
+            resultImage.src = finalUrl;
+
+            // Event saat gambar berhasil dimuat
+            resultImage.onload = () => {
+                // Setup UI Sukses
+                loader.style.display = 'none';
+                resultImage.style.display = 'block';
+                downloadHint.style.display = 'block';
+                downloadButton.style.display = 'flex';
+                generateButton.disabled = false;
+                buttonText.textContent = 'BUAT LAGI';
+                buttonIcon.className = 'fas fa-redo-alt';
+                
+                showStatus('✅ Gambar berhasil dibuat!', 'success');
+            };
+
+            // Event saat gambar gagal dimuat
+            resultImage.onerror = () => {
+                // Setup UI Error
+                loader.style.display = 'none';
+                generateButton.disabled = false;
+                buttonText.textContent = 'COBA LAGI';
+                buttonIcon.className = 'fas fa-exclamation-triangle';
+                
+                showStatus('⚠️ Gagal memuat gambar. Cek koneksi internet Anda.', 'error');
+            };
+        }
+
+        // Fungsi untuk menampilkan pesan status
+        function showStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = 'status-message ' + (type === 'error' ? 'error-message' : 'success-message');
+            statusMessage.style.display = 'block';
+        }
+
+        // Event listener untuk tombol generate
+        generateButton.addEventListener('click', generateImage);
+
+        // Event listener untuk tombol download
+        downloadButton.addEventListener('click', downloadImage);
+
+        // Event untuk touch pada gambar (mobile)
+        resultImage.addEventListener('touchstart', function(e) {
+            if (resultImage.style.display !== 'block') return;
+            
+            isTouchActive = true;
+            resultImage.classList.add('touch-active');
+            downloadOverlay.style.display = 'flex';
+            
+            touchTimer = setTimeout(() => {
+                downloadImage();
+                downloadOverlay.style.display = 'none';
+                resultImage.classList.remove('touch-active');
+                isTouchActive = false;
+            }, 1000); // 1 detik
+        });
+
+        resultImage.addEventListener('touchend', function(e) {
+            if (!isTouchActive) return;
+            
+            clearTimeout(touchTimer);
+            downloadOverlay.style.display = 'none';
+            resultImage.classList.remove('touch-active');
+            isTouchActive = false;
+        });
+
+        resultImage.addEventListener('touchmove', function(e) {
+            if (!isTouchActive) return;
+            
+            clearTimeout(touchTimer);
+            downloadOverlay.style.display = 'none';
+            resultImage.classList.remove('touch-active');
+            isTouchActive = false;
+        });
+
+        // Event untuk mouse pada gambar (desktop)
+        resultImage.addEventListener('mousedown', function(e) {
+            if (resultImage.style.display !== 'block') return;
+            
+            isTouchActive = true;
+            resultImage.classList.add('touch-active');
+            downloadOverlay.style.display = 'flex';
+            
+            touchTimer = setTimeout(() => {
+                downloadImage();
+                downloadOverlay.style.display = 'none';
+                resultImage.classList.remove('touch-active');
+                isTouchActive = false;
+            }, 1000);
+        });
+
+        resultImage.addEventListener('mouseup', function(e) {
+            if (!isTouchActive) return;
+            
+            clearTimeout(touchTimer);
+            downloadOverlay.style.display = 'none';
+            resultImage.classList.remove('touch-active');
+            isTouchActive = false;
+        });
+
+        resultImage.addEventListener('mouseleave', function(e) {
+            if (!isTouchActive) return;
+            
+            clearTimeout(touchTimer);
+            downloadOverlay.style.display = 'none';
+            resultImage.classList.remove('touch-active');
+            isTouchActive = false;
+        });
+
+        // Mencegah konteks menu default pada gambar
+        resultImage.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Memungkinkan menekan 'Enter' di kolom input untuk memicu pembuatan gambar
+        inputTextElement.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && !generateButton.disabled) {
+                generateImage();
+            }
+        });
+
+        // Inisialisasi: Panggil resetUI untuk memastikan tampilan awal benar
+        document.addEventListener('DOMContentLoaded', resetUI);
+    </script>
+</body>
+</html>
