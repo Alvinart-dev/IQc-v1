@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IQC iPhone - Glass Theme</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;
+      background: linear-gradient(145deg, #0c0c1e 0%, #15152d 30%, #1a1a3a 70%, #0c0c1e 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Background dengan efek cahaya dinamis */
+    .bg-effects {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+    }
+    
+    .light-effect {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 195, 255, 0.15) 0%, rgba(0, 195, 255, 0) 70%);
+      filter: blur(60px);
+      opacity: 0.6;
+      animation: float-light 15s infinite alternate ease-in-out;
+    }
+    
+    .light-effect:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    
+    .light-effect:nth-child(2) {
+      width: 400px;
+      height: 400px;
+      top: 60%;
+      right: 10%;
+      animation-delay: 3s;
+      background: radial-gradient(circle, rgba(100, 100, 255, 0.1) 0%, rgba(100, 100, 255, 0) 70%);
+    }
+    
+    .light-effect:nth-child(3) {
+      width: 200px;
+      height: 200px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 6s;
+      background: radial-gradient(circle, rgba(0, 255, 200, 0.08) 0%, rgba(0, 255, 200, 0) 70%);
+    }
+    
+    @keyframes float-light {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+      100% { transform: translate(30px, -30px) scale(1.1); opacity: 0.8; }
+    }
+    
+    /* Partikel halus */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      animation: float-particle 8s infinite ease-in-out;
+      box-shadow: 0 0 6px rgba(0, 195, 255, 0.3);
+      backdrop-filter: blur(1px);
+    }
+    
+    @keyframes float-particle {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(10px, -15px) scale(1.05); }
+    }
+    
+    /* Container utama dengan efek glass */
+    .container {
+      width: 100%;
+      max-width: 420px;
+      perspective: 1000px;
+    }
+    
+    /* Kartu utama dengan efek glassmorphism */
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 35px 30px;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 0 20px rgba(255, 255, 255, 0.02);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.2) 20%, 
+        rgba(255, 255, 255, 0.5) 50%, 
+        rgba(255, 255, 255, 0.2) 80%, 
+        transparent 100%);
+      z-index: 1;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 0 30px rgba(255, 255, 255, 0.05);
+    }
+    
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 35px;
+      position: relative;
+    }
+    
+    .app-icon-wrapper {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 20px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .app-icon-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, 
+        rgba(0, 195, 255, 0.4) 0%, 
+        rgba(100, 100, 255, 0.3) 50%,
+        rgba(0, 195, 255, 0.4) 100%);
+      opacity: 0.5;
+      z-index: 0;
+    }
+    
+    .app-icon {
+      font-size: 28px;
+      z-index: 1;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+    
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #fff 0%, #a0e7ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+    
+    /* Form inputs dengan gaya iOS */
+    .input-group {
+      margin-bottom: 22px;
+      position: relative;
+    }
+    
+    .input-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 10px;
+      padding-left: 8px;
+      letter-spacing: 0.3px;
+    }
+    
+    .input-field {
+      width: 100%;
+      padding: 16px 18px;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      color: #fff;
+      font-size: 16px;
+      transition: all 0.25s ease;
+      box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.05);
+      font-weight: 400;
+    }
+    
+    .input-field:focus {
+      outline: none;
+      border-color: rgba(0, 195, 255, 0.6);
+      background: rgba(0, 195, 255, 0.1);
+      box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.3),
+        0 0 0 3px rgba(0, 195, 255, 0.15),
+        0 0 20px rgba(0, 195, 255, 0.2);
+    }
+    
+    .input-field::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+      font-weight: 400;
+    }
+    
+    /* Tombol dengan efek glass */
+    .btn {
+      width: 100%;
+      padding: 18px;
+      background: rgba(0, 195, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 195, 255, 0.3);
+      border-radius: 14px;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      margin-top: 15px;
+      box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      letter-spacing: 0.3px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        transparent 100%);
+    }
+    
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      background: rgba(0, 195, 255, 0.25);
+      border-color: rgba(0, 195, 255, 0.5);
+      box-shadow: 
+        0 10px 25px rgba(0, 195, 255, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+    
+    .btn:hover::after {
+      left: 100%;
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+      transition: transform 0.1s ease;
+    }
+    
+    /* Loading state */
+    .loading {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 0;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top: 3px solid #00c3ff;
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+      margin-bottom: 25px;
+      box-shadow: 0 0 15px rgba(0, 195, 255, 0.4);
+      position: relative;
+    }
+    
+    .spinner::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top: 3px solid rgba(255, 255, 255, 0.2);
+      animation: spin-reverse 2s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes spin-reverse {
+      to { transform: rotate(-720deg); }
+    }
+    
+    .loading-text {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+    
+    /* Result state */
+    .result {
+      display: none;
+      text-align: center;
+    }
+    
+    .result-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 25px;
+      background: linear-gradient(135deg, #fff 0%, #a0e7ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.3px;
+    }
+    
+    .result-image-container {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 16px;
+      padding: 15px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.3),
+        0 5px 15px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+    }
+    
+    .result-image {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      display: block;
+    }
+    
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      margin-top: 12px;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Footer kecil */
+    .footer {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 0.3px;
+    }
+    
+    /* Animasi halus */
+    .fade-in {
+      animation: fadeIn 0.4s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    
+    /* Responsif untuk mobile */
+    @media (max-width: 480px) {
+      .container {
+        max-width: 100%;
+      }
+      
+      .card {
+        padding: 25px 20px;
+        border-radius: 20px;
+      }
+      
+      .title {
+        font-size: 24px;
+      }
+      
+      .app-icon-wrapper {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+      }
+      
+      .app-icon {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background dengan efek cahaya -->
+  <div class="bg-effects">
+    <div class="light-effect"></div>
+    <div class="light-effect"></div>
+    <div class="light-effect"></div>
+  </div>
+  
+  <!-- Partikel halus -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- Container utama -->
+  <div class="container">
+    <div class="card fade-in" id="mainCard">
+      <!-- Header -->
+      <div class="header">
+        <div class="app-icon-wrapper">
+          <div class="app-icon">☠️</div>
+        </div>
+        <h1 class="title">IQC iPhone</h1>
+        <p class="subtitle">buat JJ Loh ya 🤭</p>
+      </div>
+      
+      <!-- Form input -->
+      <div class="input-group">
+        <label class="input-label">Waktu</label>
+        <input type="text" id="time" class="input-field" placeholder="18:30" />
+      </div>
+      
+      <div class="input-group">
+        <label class="input-label">Baterai (%)</label>
+        <input type="number" id="battery" class="input-field" placeholder="75" min="0" max="100" />
+      </div>
+      
+      <div class="input-group">
+        <label class="input-label">Operator</label>
+        <input type="text" id="carrier" class="input-field" placeholder="Telkomsel" />
+      </div>
+      
+      <div class="input-group">
+        <label class="input-label">Pesan</label>
+        <input type="text" id="message" class="input-field" placeholder="Woi kacung" />
+      </div>
+      
+      <button class="btn" onclick="generateImage()">Buat Gambar</button>
+      
+      <div class="footer">
+        Tekan Enter untuk membuat gambar
+      </div>
+    </div>
+    
+    <!-- Loading state -->
+    <div class="card loading" id="loadingCard">
+      <div class="spinner"></div>
+      <p class="loading-text">Membuat gambar...</p>
+    </div>
+    
+    <!-- Result state -->
+    <div class="card result" id="resultCard">
+      <h2 class="result-title">Gambar Siap!</h2>
+      <div class="result-image-container">
+        <img id="resultImage" class="result-image" src="" alt="Hasil" />
+      </div>
+      <a id="downloadLink" download="iqc-iphone.jpg">
+        <button class="btn">Download Gambar</button>
+      </a>
+      <button class="btn btn-secondary" onclick="resetForm()">Buat Lagi</button>
+    </div>
+  </div>
+
+  <script>
+    // Buat partikel halus
+    function createParticles() {
+      const container = document.getElementById('particles');
+      const particleCount = window.innerWidth < 768 ? 20 : 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        const size = Math.random() * 3 + 1;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.opacity = Math.random() * 0.5 + 0.2;
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        particle.style.animationDuration = Math.random() * 10 + 5 + 's';
+        container.appendChild(particle);
+      }
+    }
+    
+    // Tampilkan state tertentu
+    function showState(state) {
+      document.getElementById('mainCard').style.display = state === 'main' ? 'block' : 'none';
+      document.getElementById('loadingCard').style.display = state === 'loading' ? 'flex' : 'none';
+      document.getElementById('resultCard').style.display = state === 'result' ? 'block' : 'none';
+      
+      // Tambahkan efek animasi saat berpindah state
+      if (state === 'main') {
+        document.getElementById('mainCard').classList.add('fade-in');
+      } else if (state === 'result') {
+        document.getElementById('resultCard').classList.add('fade-in');
+      }
+    }
+    
+    // Generate gambar
+    function generateImage() {
+      const time = document.getElementById('time').value.trim();
+      const battery = document.getElementById('battery').value.trim();
+      const carrier = document.getElementById('carrier').value.trim();
+      const message = document.getElementById('message').value.trim();
+      
+      if (!time || !battery || !carrier || !message) {
+        alert('Harap lengkapi semua field!');
+        return;
+      }
+      
+      showState('loading');
+      
+      const url = `https://brat.siputzx.my.id/iphone-quoted?time=${encodeURIComponent(time)}&batteryPercentage=${battery}&carrierName=${encodeURIComponent(carrier)}&messageText=${encodeURIComponent(message)}&emojiStyle=apple`;
+      
+      const resultImage = document.getElementById('resultImage');
+      const downloadLink = document.getElementById('downloadLink');
+      
+      // Gunakan timeout kecil untuk memastikan animasi loading terlihat
+      setTimeout(() => {
+        resultImage.src = url;
+        resultImage.onload = () => {
+          downloadLink.href = url;
+          showState('result');
+        };
+        
+        resultImage.onerror = () => {
+          alert('Gagal membuat gambar. Coba lagi.');
+          showState('main');
+        };
+      }, 300);
+    }
+    
+    // Reset form
+    function resetForm() {
+      document.getElementById('time').value = '';
+      document.getElementById('battery').value = '';
+      document.getElementById('carrier').value = '';
+      document.getElementById('message').value = '';
+      showState('main');
+    }
+    
+    // Support Enter key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' && document.getElementById('mainCard').style.display !== 'none') {
+        generateImage();
+      }
+    });
+    
+    // Tambahkan efek interaktif pada input fields
+    document.querySelectorAll('.input-field').forEach(field => {
+      field.addEventListener('focus', function() {
+        this.parentElement.classList.add('focused');
+      });
+      
+      field.addEventListener('blur', function() {
+        this.parentElement.classList.remove('focused');
+      });
+    });
+    
+    // Initialize
+    createParticles();
+    showState('main');
+    
+    // Auto-focus pada input pertama
+    document.getElementById('time').focus();
+  </script>
+</body>
+</html>
